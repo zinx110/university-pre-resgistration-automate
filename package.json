@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^19.7.5"
+    "play-sound": "^1.1.5",
+    "puppeteer": "^19.7.5",
+    "sound-play": "^1.1.0"
   }
 }

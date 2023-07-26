@@ -1,4 +1,12 @@
 const puppeteer = require("puppeteer");
+const player = require("play-sound")((opts = {}));
+const sound = require("sound-play");
+const path = require("path");
+const sound1 = path.join(__dirname, "./assets/sounds/sound1.mp3");
+const bellSound = path.join(__dirname, "./assets/sounds/bell.mp3");
+const clickSound = path.join(__dirname, "./assets/sounds/click.mp3");
+const interfaceSound = path.join(__dirname, "./assets/sounds/interface.mp3");
+const decideSound = path.join(__dirname, "./assets/sounds/decide.mp3");
 
 const subjects = [
     { subjectName: "ARTIFICIAL", section: "A" },
@@ -26,6 +34,7 @@ const login = async (page) => {
             waitUntil: ["domcontentloaded"],
         });
 
+        await sound.play(decideSound);
         return await 0;
     } catch (error) {
         console.log(error);
@@ -86,6 +95,7 @@ const TryUntilNextButton = async (page) => {
                 });
             }
         }
+        await sound.play(sound1);
         return await loaded;
     } catch (error) {
         console.log(error);
@@ -114,6 +124,7 @@ const selectCourses = async (page) => {
                 try {
                     setTimeout(() => {
                         f.click();
+                        sound.play(clickSound);
                     }, 3000 * index);
                 } catch (error) {}
                 f.checked = true;
@@ -122,6 +133,7 @@ const selectCourses = async (page) => {
 
         return true;
     });
+    await sound.play(bellSound);
 };
 
 (async () => {
@@ -133,10 +145,10 @@ const selectCourses = async (page) => {
             waitUntil: "networkidle0",
         });
 
-        await login(page);
-        await TryUntilNextButton(page);
-        await selectCourses(page);
-        console.log("OK");
+        // await login(page);
+        // await TryUntilNextButton(page);
+        // await selectCourses(page);
+        // console.log("OK");
 
         await page.screenshot({
             path: "screenshot.jpg",
